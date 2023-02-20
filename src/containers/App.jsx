@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
-import Person from "./Person/Person";
+import Persons from "../components/Persons/Persons";
+import Cockpit from "../components/Cockpit/Cockpit";
+import withClass from "../HOC/withClass";
+import Auxiliary from "../HOC/Auxilliary";
+
+// import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 // import styled from "styled-components";
+// import Persons from "./../components/Persons/Persons";
 
 // const StyledButton = styled.button`
 //   background-color: ${(props) => (props.alt ? "red" : "green")};
@@ -17,6 +23,11 @@ import Person from "./Person/Person";
 // `;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    console.log("Appjsifle Consturctor");
+  }
   state = {
     persons: [
       { name: "Khan", age: 22, id: 1 },
@@ -25,7 +36,25 @@ class App extends Component {
     ],
     otherState: "some other value",
     showPersons: false,
+    showCockpit: true,
   };
+
+  static getDerivedStateFromProps(props, state) {
+    console.log("[App.js] getDerivedStateFromPerson", props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount...");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[App.js] shouldComponentUpdate......");
+    return true;
+  }
+  componentDidUpdate() {
+    console.log("[App.js] ComponentDidUpdate.........");
+  }
 
   // switchNameHandler = (newName) => {
   //   this.setState({
@@ -87,12 +116,21 @@ class App extends Component {
   };
 
   render() {
+    console.log("[AppJS] renders...");
     let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
+          {/* <ErrorBoundary> */}
+          <Persons
+            persons={this.state.persons}
+            clicked={this.deletePersonHandler}
+            changed={this.nameChangedHandler}
+          />
+          {/* </ErrorBoundary> */}
+
+          {/* {this.state.persons.map((person, index) => {
             // printing persons data dynamically
             return (
               <Person
@@ -103,30 +141,25 @@ class App extends Component {
                 changed={(event) => this.nameChangedHandler(event, person.id)}
               />
             );
-          })}
+          })} */}
         </div>
       );
     }
 
-    const classes = [];
-
-    // let is es6 version of var
-
-    if (this.state.persons.length <= 2) {
-      classes.push("red");
-    }
-
-    if (this.state.persons.length <= 1) {
-      classes.push("bold");
-    }
-
     return (
       <div className="App">
-        <h1>Project</h1>
-        <h2 className={classes.join(" ")}>This is really working</h2>
-        <button className="button" onClick={this.togglePersonsHandler}>
-          Toggle showname
+        <button onClick={() => this.setState({ showCockpit: false })}>
+          Remove Toggle Button
         </button>
+
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
         {persons}
       </div>
     );
@@ -134,3 +167,4 @@ class App extends Component {
 }
 
 export default App;
+// export default withClass(App, classes.App);
