@@ -9,15 +9,27 @@ const Cockpit = (props) => {
     setTimeout(() => {
       alert("Saved Data to CLoud...");
     }, 1000);
-  }, [props.persons]);
+
+    return () => {
+      console.log("[Cockpit.js] Cleanup work");
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("[Cockpit.js] 2nd useEffect..........");
+
+    return () => {
+      console.log("[Cockpit.js] 2nd Cleanup work");
+    };
+  });
 
   // let is es6 version of var
 
-  if (props.persons.length <= 2) {
+  if (props.personsLength <= 2) {
     classes.push("red");
   }
 
-  if (props.persons.length <= 1) {
+  if (props.personsLength <= 1) {
     classes.push("bold");
   }
   return (
@@ -31,4 +43,4 @@ const Cockpit = (props) => {
   );
 };
 
-export default Cockpit;
+export default React.memo(Cockpit);

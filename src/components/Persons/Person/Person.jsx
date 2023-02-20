@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./Person.css";
 import styled from "styled-components";
+import Auxiliary from "../../../HOC/Auxilliary";
+import withClass from "../../../HOC/withClass";
 
 const StyledDiv = styled.div`
   width: 60%;
@@ -24,20 +26,26 @@ class Person extends Component {
 
     console.log("[Person.js] is rendering........");
     return (
-      // <div className="Person" style={style}>
-      <StyledDiv>
-        <h3>My name is {this.props.name}</h3>
-        <h3 onClick={this.props.click}>and I am {this.props.age} old</h3>
-        {this.props.children}
-
+      <Auxiliary>
+        {/* // <div className="Person" style={style}> */}
+        {/* <StyledDiv> */}
+        <h3>My name is {this.props.name}</h3>,
+        <h3 onClick={this.props.click}>and I am {this.props.age} old</h3>,
+        <p>{this.props.children}</p>,
         <input
           type="text"
           onChange={this.props.changed}
           value={this.props.name}
         />
-      </StyledDiv>
+        <h3>Hello there</h3>
+        {/* </StyledDiv> */}
+      </Auxiliary>
     );
   }
 }
 
-export default Person;
+export default withClass(Person, classes.Person);
+
+// <React.Fragement></React.Fragement> works same as <Auxilliary></Auxiliary
+// React.Fragement is a built in one.
+// import React,{Fragment} from "./react";

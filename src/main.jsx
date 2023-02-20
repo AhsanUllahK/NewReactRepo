@@ -4,7 +4,7 @@ import App from "./containers/App";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     <App appTitle="Personal Manager" />
-  </React.StrictMode>
+  </>
 );

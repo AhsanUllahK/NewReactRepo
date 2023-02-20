@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import "./App.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import withClass from "../HOC/withClass";
+import Auxiliary from "../HOC/Auxilliary";
+
 // import ErrorBoundary from "../components/ErrorBoundary/ErrorBoundary";
 // import styled from "styled-components";
+// import Persons from "./../components/Persons/Persons";
 
 // const StyledButton = styled.button`
 //   background-color: ${(props) => (props.alt ? "red" : "green")};
@@ -32,6 +36,7 @@ class App extends Component {
     ],
     otherState: "some other value",
     showPersons: false,
+    showCockpit: true,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -143,12 +148,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler}
-        />
+        <button onClick={() => this.setState({ showCockpit: false })}>
+          Remove Toggle Button
+        </button>
+
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
         {persons}
       </div>
     );
@@ -156,3 +167,4 @@ class App extends Component {
 }
 
 export default App;
+// export default withClass(App, classes.App);
